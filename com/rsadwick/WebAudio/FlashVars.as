@@ -1,6 +1,7 @@
 package com.rsadwick.WebAudio 
 {
 	import flash.display.Sprite;
+	import flash.external.ExternalInterface;
 	/**
 	 * ...
 	 * @author Ryan Sadwick
@@ -8,9 +9,10 @@ package com.rsadwick.WebAudio
 	public class FlashVars extends Sprite
 	{
 		protected var paramObj:Object;
-		public function FlashVars((params:Object) 
+		
+		public function FlashVars(params:Object) 
 		{
-			stage.scaleMode = StageScaleMode.NO_SCALE;
+			
 			try 
 			{
 				this.paramObj = params;
