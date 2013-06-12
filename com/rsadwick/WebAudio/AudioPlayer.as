@@ -49,7 +49,12 @@ package com.rsadwick.WebAudio
 		{
 			if (channel.position / 1000 >= position.end)
 			{
-				channel.stop();
+				if (position.loop) {					
+					channel.stop();
+					channel = sound.play((position.start + 0.0) * 1000);
+				}
+				else
+					channel.stop();	
 			}
 		}
 		
@@ -69,7 +74,5 @@ package com.rsadwick.WebAudio
 			//soundsTransform.volume = volume;
 			//channel.soundTransform = soundsTransform;
 		}
-		
-		
 	}
 }
