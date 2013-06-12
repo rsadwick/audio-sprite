@@ -2,11 +2,13 @@ package com.rsadwick.WebAudio
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.TimerEvent;
 	import flash.external.ExternalInterface;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
 	import flash.media.SoundTransform;
 	import flash.net.URLRequest;
+	import flash.utils.Timer;
 	
 	public class AudioPlayer extends Sprite
 	{
@@ -14,6 +16,8 @@ package com.rsadwick.WebAudio
 		private var sound:Sound;
 		private var channel:SoundChannel;
 		private var soundsTransform:SoundTransform;
+		private var timer:Timer;
+		private var position:Object;
 		
 		public function AudioPlayer(src:String) 
 		{
@@ -22,6 +26,8 @@ package com.rsadwick.WebAudio
 			sound.load(new URLRequest(src));
 			channel = new SoundChannel();
 			soundsTransform = new SoundTransform();
+			timer = new Timer(200);
+			timer.addEventListener(TimerEvent.TIMER, progress);
 			
 			ExternalInterface.addCallback("play", play);
 			ExternalInterface.addCallback("pause", pause);
@@ -30,11 +36,21 @@ package com.rsadwick.WebAudio
 			//ExternalInterface.addCallback("getAudioVolume", getAudioVolume);
 		}
 		
-		protected function play():void
-		{	
-			channel = sound.play();
+		protected function play(position:Object):void
+		{
+			this.position = position;
+			timer.start();
+			channel = sound.play(position.start * 1000);
 			channel.soundTransform = soundsTransform;
 			channel.addEventListener(Event.SOUND_COMPLETE, onComplete);
+		}
+		
+		protected function progress(e:TimerEvent):void 
+		{
+			if (channel.position / 1000 >= position.end)
+			{
+				channel.stop();
+			}
 		}
 		
 		protected function pause():void
@@ -49,9 +65,11 @@ package com.rsadwick.WebAudio
 		
 		protected function setAudioVolume(volume:Number):void
 		{
-			channel = sound.play();
-			soundsTransform.volume = volume;
-			channel.soundTransform = soundsTransform;
+			//channel = sound.play();
+			//soundsTransform.volume = volume;
+			//channel.soundTransform = soundsTransform;
 		}
+		
+		
 	}
 }
