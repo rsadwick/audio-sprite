@@ -1,4 +1,4 @@
-web-audio
+Audio sprites
 =========
 
-play audio on web using html5 or flash
+play audio sprites on web using html5 or flash
