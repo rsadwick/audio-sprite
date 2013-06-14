@@ -29,14 +29,14 @@ package com.rsadwick.WebAudio
 			timer = new Timer(200);
 			timer.addEventListener(TimerEvent.TIMER, progress);
 			
-			ExternalInterface.addCallback("play", play);
-			ExternalInterface.addCallback("pause", pause);
+			ExternalInterface.addCallback("playSound", playSound);
+			ExternalInterface.addCallback("pauseSound", pauseSound);
 			ExternalInterface.call("loadFlashContainer");
 			ExternalInterface.addCallback("setAudioVolume", setAudioVolume);
 			//ExternalInterface.addCallback("getAudioVolume", getAudioVolume);
 		}
 		
-		protected function play(position:Object):void
+		protected function playSound(position:Object):void
 		{
 			this.position = position;
 			timer.start();
@@ -58,7 +58,7 @@ package com.rsadwick.WebAudio
 			}
 		}
 		
-		protected function pause():void
+		protected function pauseSound():void
 		{
 			channel.stop();
 		}
