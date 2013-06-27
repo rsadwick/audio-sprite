@@ -32,12 +32,13 @@ package com.rsadwick.WebAudio
 			ExternalInterface.addCallback("playSound", playSound);
 			ExternalInterface.addCallback("pauseSound", pauseSound);
 			ExternalInterface.call("loadFlashContainer");
-			ExternalInterface.addCallback("setAudioVolume", setAudioVolume);
-			//ExternalInterface.addCallback("getAudioVolume", getAudioVolume);
 		}
 		
 		protected function playSound(position:Object):void
 		{
+			timer.removeEventListener(TimerEvent.TIMER, progress);
+			timer.stop();
+			timer.addEventListener(TimerEvent.TIMER, progress);
 			this.position = position;
 			timer.start();
 			channel = sound.play(position.start * 1000);
@@ -66,13 +67,6 @@ package com.rsadwick.WebAudio
 		protected function onComplete(e:Event):void
 		{
 			ExternalInterface.call("flashSoundComplete");
-		}
-		
-		protected function setAudioVolume(volume:Number):void
-		{
-			//channel = sound.play();
-			//soundsTransform.volume = volume;
-			//channel.soundTransform = soundsTransform;
 		}
 	}
 }

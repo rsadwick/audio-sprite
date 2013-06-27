@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jimmah up mah audioz</title>
+</head>
+<body>
+
+<button id="load">Load The Sound</button>
+<button id="roll">Play Roll</button>
+<button id="drums">Play Drums</button>
+<button id="waazoo">Play Waazoo</button>
+<div id="sound"></div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+<script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js" ></script>
+<script src="../js/libs/extend.js" ></script>
+<script src="../js/audio/sound.js" ></script>
+<script src="../js/audio/audio.js" ></script>
+<script src="../js/audio/html5AudioSprite.js" ></script>
+<script src="../js/audio/flashAudioSprite.js" ></script>
+
+<script>
+$(document).ready(function() {
+
+    var sounds = {
+        'roll': {"start" : 0, "end" : 2.0, "loop" : true},
+        'drumroll': {"start" : 2.7, "end" : 6.1, "loop" : true},
+        'drumend': {"start" : 6.3, "end" : 9.5, "loop" : false},
+        'win': {"start" : 7.8, "end" : 9.5, "loop" : false}
+    }
+
+    var browserAudio = null;
+    if(!Modernizr.canvas)
+    {
+        browserAudio = new Sound.Html5AudioSprite({ mp3_src : "../example/s2w.mp3?v=5", ogg_src : "../example/s2w.ogg?v=4" });
+    }
+    else
+    {
+        browserAudio = new Sound.FlashAudio({ mp3_src: "../example/s2w.mp3?v=3", swf : "../flash/audioplayer.swf?v=2", flashElement : "slots" });
+    }
+
+    var audioSprite = new Sound({
+        container: $('#sound'),
+        scenes:
+        [
+            browserAudio
+        ]
+    });
+
+    $('#load').on('click', function(){
+        audioSprite.Load();
+    })
+
+    $('#roll').on('click', function(){
+        audioSprite.Play(sounds.roll);
+    })
+
+    $('#drums').on('click', function(){
+        audioSprite.Play(sounds.drumroll);
+    })
+
+    $('#waazoo').on('click', function(){
+        audioSprite.Play(sounds.win);
+    })
+
+});
+</script>
+
+</body>
+</html>
