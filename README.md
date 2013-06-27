@@ -27,7 +27,7 @@ If you need Flash and HTML5 audio, you can do some feature/user agent detection 
 
 ```javascript
     var browserAudio = null;
-    if(!Modernizr.canvas)
+    if(Modernizr.canvas)
     {
         browserAudio = new Sound.Html5AudioSprite({ mp3_src : "../example/s2w.mp3?v=5", ogg_src : "../example/s2w.ogg?v=4" });
     }
