@@ -6,12 +6,13 @@ Provides both html5 and flash audio wrappers.  This way you can use the same aud
 
 ## Caveats
 
-- Todo
+- iOS has to call .Load on a touch event.  Use a different touch event to call .Play or the audio will not play on the first .Play call
+- Only one sound is called at a time.  See the example for how it works.
+- Android is not the best at playing media.  You may need to try different audio encoding to get it to work.
 
 # Usage
 
-Create an object of the timing in your audio file:
-
+Create an object of the timing in your audio file.  Give it a reference name, start, end, and if it loops:
 
 ```javascript
   var sounds = {
