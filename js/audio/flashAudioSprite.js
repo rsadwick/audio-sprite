@@ -34,7 +34,7 @@
             this.GetCanvas().append(this._element);
             //flash embed:
             var swfVersionStr = "10.0.0";
-            var xiSwfUrlStr = "//img.hsn.com/images/prod/flash_video/arcade/expressInstall.swf";
+            var xiSwfUrlStr = "/flash/expressInstall.swf";
             var flashvars = {};
             flashvars.src = this._mp3_src;
             var params = {};

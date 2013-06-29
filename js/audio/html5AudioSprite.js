@@ -63,7 +63,7 @@
                 this._audio.play();
             }
             catch(e){
-               // setTimeout(this._audio.play, 2000);
+                setTimeout(this._audio.play, 2000);
             }
         };
 
