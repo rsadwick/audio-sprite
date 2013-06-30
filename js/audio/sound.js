@@ -1,6 +1,6 @@
 ;(function($)
 {
-    // This is a private helper class we use inernally to associate meta data with raw scene objects.
+    // This is a private helper class we use internally to associate meta data with raw scene objects.
     var AudioWrapper = function(scene)
     {
         this.Audio = scene;
@@ -9,9 +9,9 @@
     };
 
     /**
-    * class Spin2win.Sound
+    * class Sound
     *
-    * Provides an user interface for displaying and interacting with multiple [[Spin2win.Sound.Audio]] objects.
+    * Provides an user interface for displaying and interacting with multiple [[Sound.Audio]] objects.
     **/
     Sound = function(config)
     {
@@ -38,8 +38,6 @@
         {
             __scope._stageViewport.append(AudioWrapper.Audio.GetCanvas());
         });
-
-        //this.Load();
     };
 
 
@@ -127,11 +125,6 @@
     Play: function(sound)
     {
         this._activeAudioWrapper.Audio.Start(sound);
-    },
-
-    SetVolume: function(volume)
-    {
-        this._activeAudioWrapper.Audio.OnVolumeChange(volume);
     }
   };
 })(jQuery);

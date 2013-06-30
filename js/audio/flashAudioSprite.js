@@ -60,7 +60,7 @@
 
         //Flash calls this function when the flash player has metadata:
         loadFlashContainer = function () {
-            //reference flash player to call hello api:
+            //reference flash player to call audio api:
             __scope.flash_player = $("#" + __scope._flashElement).get(0);
         };
 
