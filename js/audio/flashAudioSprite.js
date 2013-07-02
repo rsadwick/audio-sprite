@@ -1,9 +1,4 @@
 ; (function ($) {
-    /**
-     * class Spin2win.FlashAudio < Spin2win.Scene
-     *
-     * A simple slideshow scene class that fades in html content.
-     **/
     Sound.FlashAudio = (function (_super) {
         __extends(FlashAudio, _super);
 

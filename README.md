@@ -35,14 +35,22 @@ If you need Flash and HTML5 audio, you can do some feature/user agent detection 
 
 ```javascript
     var browserAudio = null;
-    if(Modernizr.canvas)
-    {
-        browserAudio = new Sound.Html5AudioSprite({ mp3_src : "../example/s2w.mp3?v=5", ogg_src : "../example/s2w.ogg?v=4" });
-    }
-    else
-    {
-        browserAudio = new Sound.FlashAudio({ mp3_src: "../example/s2w.mp3?v=3", swf : "../flash/audioplayer.swf?v=2", flashElement : "slots" });
-    }
+    (Modernizr.canvas) ? browserAudio = new Sound.Html5AudioSprite({
+        mp3_src : "../example/s2w.mp3?v=5",
+        ogg_src : "../example/s2w.ogg?v=4" }) :
+
+    browserAudio = new Sound.FlashAudio({
+        mp3_src: "../example/s2w.mp3?v=3",
+        swf : "../flash/audioplayer.swf?v=2",
+        flashElement : "slots" });
+
+    var audioSprite = new Sound({
+        container: $('#sound'),
+        wrapper:
+        [
+            browserAudio
+        ]
+    });
 ```
 
 Then load the audio file.  Remember that iOS needs to call .Load on a touch event.  .Play also needs to happen on a touch event or nothing will play:

@@ -1,18 +1,13 @@
 ;(function($)
 {
-    // This is a private helper class we use internally to associate meta data with raw scene objects.
-    var AudioWrapper = function(scene)
+    // This is a private helper class we use inernally to associate meta data with raw scene objects.
+    var AudioWrapper = function(wrapper)
     {
-        this.Audio = scene;
+        this.Audio = wrapper;
         this.Frame = $('<div class="frame"></div>').data('Sound.Audio', this);
         this.Frame.append('<div class="overlay"></div>');
     };
 
-    /**
-    * class Sound
-    *
-    * Provides an user interface for displaying and interacting with multiple [[Sound.Audio]] objects.
-    **/
     Sound = function(config)
     {
         var __scope = this;
@@ -21,20 +16,17 @@
 
         this._container = $(config.container);
 
-        // Remove anything that may be in the container, such as messaging for users without Javascript.
-        //this._container.empty();
-
-        // Wrap all our scenes in our AudioWrapper class so we can keep additional state.
-        this._scenes = $.map(config.scenes, function(scene)
+        // Wrap so we can keep additional state.
+        this._wrappers = $.map(config.wrapper, function(wrapper)
         {
-            return new AudioWrapper(scene);
+            return new AudioWrapper(wrapper);
         });
 
         this._stageViewport = $('<div class="viewport"></div>');
 
         this._container.append(this._stageViewport);
 
-        $.each(this._scenes, function(i, AudioWrapper)
+        $.each(this._wrappers, function(i, AudioWrapper)
         {
             __scope._stageViewport.append(AudioWrapper.Audio.GetCanvas());
         });
@@ -45,11 +37,11 @@
     {
         _container: null,
         _sceneCount: 0,
-        _scenes: null,
+        _wrappers: null,
         _stage: null,
         _stageViewport: null,
 
-        _activateScene: function(newAudioWrapper)
+        _activateWrapper: function(newAudioWrapper)
         {
             if (null == newAudioWrapper)
                 return;
@@ -68,7 +60,7 @@
             if (null != lastAudioWrapper)
                 lastAudioWrapper.Audio.Stop();
 
-            $.each(this._scenes, function(i, AudioWrapper)
+            $.each(this._wrappers, function(i, AudioWrapper)
             {
                 AudioWrapper.Frame[((AudioWrapper == newAudioWrapper) ? 'addClass' : 'removeClass')]('active');
             });
@@ -76,7 +68,7 @@
 
         _getFirstAudioWrapper: function()
         {
-            return ((this._scenes.length == 0) ? null : this._scenes[0]);
+            return ((this._wrappers.length == 0) ? null : this._wrappers[0]);
         },
 
         _getNextAudioWrapper: function()
@@ -91,17 +83,16 @@
                 if (null != activeAudioWrapperIndex)
                 {
                     var nextAudioWrapperIndex = (activeAudioWrapperIndex + 1);
-                    AudioWrapper = ((this._scenes.length > nextAudioWrapperIndex) ? this._scenes[nextAudioWrapperIndex] : null);
+                    AudioWrapper = ((this._wrappers.length > nextAudioWrapperIndex) ? this._wrappers[nextAudioWrapperIndex] : null);
                 }
             }
-
             return AudioWrapper;
         },
     
     _getAudioWrapperIndex: function(needleAudioWrapper)
     {
         var AudioWrapperIndex = null;
-        $.each(this._scenes, function(i, haystackAudioWrapper)
+        $.each(this._wrappers, function(i, haystackAudioWrapper)
         {
             if (haystackAudioWrapper == needleAudioWrapper || haystackAudioWrapper.Audio == needleAudioWrapper)
             {
@@ -119,7 +110,7 @@
 
     Load: function()
     {
-        this._activateScene(this._getNextAudioWrapper() || this._getFirstAudioWrapper());
+        this._activateWrapper(this._getNextAudioWrapper() || this._getFirstAudioWrapper());
     },
 
     Play: function(sound)
